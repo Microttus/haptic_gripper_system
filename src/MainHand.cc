@@ -27,10 +27,10 @@ public:
 private:
     void timer_callback()
     {
-        auto message = std_msgs::msg::String();		// CHANGE
+        auto message = std_msgs::msg::String();
         message.data = {"base_to_crane_boom"};
         //message.header.stamp = this->get_clock()->now();
-        RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());	// CHANGE
+        RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
         publisher_->publish(message);
 
     }
