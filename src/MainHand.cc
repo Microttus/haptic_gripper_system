@@ -10,6 +10,9 @@
 
 #include "std_msgs/msg/string.hpp"
 
+#include "../include/qbSoftHandControl.hh"
+#include "../include/qbSoftHandHandler.hh"
+
 using namespace std::chrono_literals;
 
 
