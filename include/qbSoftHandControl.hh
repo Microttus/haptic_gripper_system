@@ -8,9 +8,10 @@
 
 class qbSoftHandControl{
 public:
-    qbSoftHandControl();
+    qbSoftHandControl(auto const *device_info);
     ~qbSoftHandControl();
 
+    std::string GetDeviceInfo();
     std::vector<int16_t> GetControlReference();
     std::vector<int16_t> GetCurrents();
     std::vector<int16_t> GetPositions();
@@ -19,7 +20,7 @@ public:
 
     bool SetMotorStates(bool active);
     bool GetMotorStates();
-    void SetGripValue(int[2] &control_ref);
+    void SetGripValue(int grip, int spread);
 
     std::vector<float> GetPositionPID();
     std::vector<float> GetCurrentPID();
@@ -39,7 +40,6 @@ public:
     int GetCurrentLimit();
 
 private:
-    qbSoftHandHandler SerialHandler_;
 
     std::map<int, std::shared_ptr<qbrobotics_research_api::qbSoftHandLegacyResearch>> soft_hands_;
     std::vector<qbrobotics_research_api::Communication::ConnectedDeviceInfo> device_ids_;           // IDs of connected devices

@@ -13,6 +13,12 @@ find_package(std_msgs REQUIRED)
 add_subdirectory(lib/qbdevice-api-7.x.x/qbrobotics-driver qbrobotics-driver)
 add_subdirectory(lib/qbdevice-api-7.x.x/serial serial)
 
+## Libraries
+add_library(qbSoftHandLib
+        src/qbSoftHandContol.cc
+        src/qbSoftHandHandler.cc
+)
+
 # Adds excecutable
 add_executable(qbhand_control
         src/MainHand.cc
@@ -23,6 +29,9 @@ add_executable(simple_thimble_control
 )
 ament_target_dependencies(simple_thimble_control rclcpp std_msgs)
 
+target_link_libraries(${PROJECT_NAME}
+        qbSoftHandLib
+)
 
 install(TARGETS
         qbhand_control
