@@ -4,12 +4,16 @@
 
 #include "../include/qbSoftHandControl.hh"
 
+#include "../lib/qbdevice-api-7.x.x/qbrobotics-driver/libs/research/include/qbrobotics_research_api/qbsofthand_research_api.h"
+
 #include <iostream>
 #include <string>
 #include <vector>
 
-qbSoftHandControl::qbSoftHandControl(auto const *device_info) {
+qbSoftHandControl::qbSoftHandControl(std::map<int, std::shared_ptr<qbrobotics_research_api::qbSoftHandLegacyResearch> > *device_info, std::vector<qbrobotics_research_api::Communication::ConnectedDeviceInfo> *device_ids_in_) {
 
+    qbSoftHandControl::soft_hands_ = *device_info;
+    qbSoftHandControl::device_ids_ = *device_ids_in_;
 }
 
 qbSoftHandControl::~qbSoftHandControl() {

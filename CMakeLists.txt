@@ -23,13 +23,15 @@ add_library(qbSoftHandLib
 add_executable(qbhand_control
         src/MainHand.cc
 )
-ament_target_dependencies(qbhand_control rclcpp std_msgs serial)
+
+ament_target_dependencies(qbhand_control rclcpp std_msgs)
+
 add_executable(simple_thimble_control
         src/simple_timble.cc
 )
 ament_target_dependencies(simple_thimble_control rclcpp std_msgs)
 
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(qbhand_control
         qbSoftHandLib
 )
 
