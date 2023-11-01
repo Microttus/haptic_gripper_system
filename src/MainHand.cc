@@ -1,7 +1,7 @@
 /*
  * Created by Martin Økter
  *
- * created on 23/09/2023
+ * - created: 23/09/2023
  *
  * A node for connecting the control of a robotic hand
  * and the force feedback to a operator hand
@@ -18,12 +18,13 @@
 #include <unistd.h>
 #include <vector>
 
-#include "qbshr_ctr/qbSoftHandHandler.hh"
-#include "qbshr_ctr/qbSoftHandControl.hh"
-
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 #include "geometry_msgs/msg/twist.hpp"
+
+#include "qbshr_ctr/qbSoftHandHandler.hh"
+#include "qbshr_ctr/qbSoftHandControl.hh"
+
 
 using namespace std::chrono_literals;
 
@@ -79,7 +80,6 @@ private:
     update_robot_hand_feedback();
     update_finger_force();
     apply_finger_force();
-
   }
 
   void heartbeat_update()
@@ -107,8 +107,12 @@ private:
   {
     force_from_robot_hand = RightRobotHand.force_compensated;
 
+    int out_max = 255;
+    int in_max = 400;
+    int oi_min = 0;
+
     //(x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-    force_from_robot_hand = (force_from_robot_hand - 0) * (254 - 0) / (400 - 0) + 0;
+    force_from_robot_hand = (force_from_robot_hand - oi_min) * (out_max - oi_min) / (in_max - oi_min) + oi_min;
 
     if (force_from_robot_hand > 254) {
       force_from_robot_hand = 254;
@@ -153,7 +157,6 @@ private:
   RobotHandFeedback RightRobotHand;
 
   // Temp test values // TODO: Remove during cleanup
-  int temp_fing_force_ = 180;
   int temp_grip_state;
   int force_from_robot_hand = 0;
   //size_t count_;
