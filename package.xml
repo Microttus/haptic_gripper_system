@@ -2,15 +2,22 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>ur5_qbhand_control</name>
-  <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="oktma@todo.todo">oktma</maintainer>
-  <license>TODO: License declaration</license>
+  <version>0.0.1</version>
+  <description>This package aims to combine trajectory control for an UR5 and grasping with a robotic hand</description>
+  <maintainer email="martino@uia.no">oktma</maintainer>
+  <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <test_depend>ament_lint_auto</test_depend>
-  <test_depend>ament_lint_common</test_depend>
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+
+  <depend>Serial</depend>
+  <depend>qbrobotics_driver</depend>
+  <depend>qbshr_ctr</depend>
+
 
   <export>
     <build_type>ament_cmake</build_type>

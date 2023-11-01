@@ -1,49 +1,56 @@
 cmake_minimum_required(VERSION 3.8)
 project(ur5_qbhand_control)
 
-if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_options(-Wall -Wextra -Wpedantic)
+# Specify the C++ standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+message(${PROJECT_NAME})
+
+include_directories(include ../qbshr_ctr/include/qbshr_ctr ../qbshr_ctr/libs/qbdevice-api-7.x.x/serial/include ../qbshr_ctr/libs/qbdevice-api-7.x.x/qbrobotics-driver/libs/research/include)
+
+get_filename_component(API_PATH_uq ../qbshr_ctr/libs ABSOLUTE)
+if(EXISTS "${API_PATH_uq}/qbdevice-api-7.x.x/serial/CMakeLists.txt")
+    message("-- [ ${PROJECT_NAME}] Serial folder found")
 endif()
+SET(CMAKE_PREFIX_PATH ${API_PATH_uq}/qbdevice-api-7.x.x/serial)
+
+
+message(${CMAKE_CURRENT_SOURCE_DIR})
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
-add_subdirectory(lib/qbdevice-api-7.x.x/qbrobotics-driver qbrobotics-driver)
-add_subdirectory(lib/qbdevice-api-7.x.x/serial serial)
+find_package(Serial REQUIRED)
+find_package(qbrobotics_driver REQUIRED)
+find_package(qbshr_ctr REQUIRED)
 
-## Libraries
-add_library(qbSoftHandLib
-        src/qbSoftHandContol.cc
-        src/qbSoftHandHandler.cc
-)
 
-# Adds excecutable
-add_executable(qbhand_control
-        src/MainHand.cc
-)
+# Build Settings
+add_executable(qbhand_control src/MainHand.cc)
 
-ament_target_dependencies(qbhand_control rclcpp std_msgs)
 
-add_executable(simple_thimble_control
-        src/simple_timble.cc
-)
-ament_target_dependencies(simple_thimble_control rclcpp std_msgs)
+#target_link_libraries(qbhand_control
+#        PUBLIC
+#        qbshr_ctr::qbshr_ctr
+#
+#)
 
-target_link_libraries(qbhand_control
-        qbSoftHandLib
+ament_target_dependencies(qbhand_control
+        std_msgs
+        rclcpp
+        sensor_msgs
+        Serial
+        qbrobotics_driver
+        qbshr_ctr
 )
 
 install(TARGETS
         qbhand_control
-        simple_thimble_control
         DESTINATION lib/${PROJECT_NAME})
 
-if(BUILD_TESTING)
-  find_package(ament_lint_auto REQUIRED)
-  set(ament_cmake_cpplint_FOUND TRUE)
-  ament_lint_auto_find_test_dependencies()
-endif()
 
 ament_package()
