@@ -107,7 +107,7 @@ private:
   {
     force_from_robot_hand = RightRobotHand.force_compensated;
 
-    int out_max = 255;
+    int out_max = 254;
     int in_max = 400;
     int oi_min = 0;
 
@@ -122,6 +122,10 @@ private:
 
     RightHand.thumb = force_from_robot_hand;
     RightHand.index = force_from_robot_hand;
+    RightHand.middle = force_from_robot_hand;
+    RightHand.ring = force_from_robot_hand;
+    RightHand.little = force_from_robot_hand;
+    RightHand.palm = force_from_robot_hand;
   }
 
   void set_robot_hand_pos()
