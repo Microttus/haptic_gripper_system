@@ -44,6 +44,7 @@ struct RobotHandFeedback {
   int force_compensated;
 };
 
+
 class HandInterface : public rclcpp::Node
 {
 public:
@@ -54,6 +55,7 @@ public:
       heartbeat_ = this->create_publisher<std_msgs::msg::String>("heartbeat_control", 10);        // Heartbeat
       right_hand_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("finger_force", 10);    // Finger force publisher
 
+      hand_guest_sub_ = this->create_subscription<std_msgs::msg::String>("/hand_gestures", 10, std::bind(&HandInterface::set_robot_hand_pos_camera, this, std::placeholders::_1));
 
       timer_ = this->create_wall_timer(10ms, std::bind(&HandInterface::timer_callback, this));
 
@@ -76,7 +78,8 @@ private:
   void timer_callback()
   {
     heartbeat_update();
-    set_robot_hand_pos();
+    //set_robot_hand_pos();
+    set_robot_hand_pos_camera();
     update_robot_hand_feedback();
     update_finger_force();
     apply_finger_force();
@@ -139,6 +142,19 @@ private:
     qbSoftHand_devices[0].SetGripValue(temp_grip_state,0);
   }
 
+  void set_robot_hand_pos_camera(std_msgs::msg::String msg)
+  {
+    std::string grip_state = msg->data;
+
+    if (grip_state == 'Open') {
+      temp_grip_state = 0;
+    } else if (grip_state == 'Closed') {
+      temp_grip_state = 19000;
+    }
+
+    qbSoftHand_devices[0].SetGripValue(temp_grip_state,0);
+  }
+
   void update_robot_hand_feedback()
   {
     RightRobotHand.positions = qbSoftHand_devices[0].GetPositions();
@@ -151,6 +167,7 @@ private:
   rclcpp::TimerBase::SharedPtr timer_;
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr heartbeat_;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr right_hand_pub_;
+  rclcpp::Subscription<std_msgs::msg::String>::SharedPtr hand_guest_sub_;
 
   // Finger force data struct declaration
   FingerForceStruct RightHand;
