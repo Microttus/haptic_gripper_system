@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(ur5_qbhand_control)
+project(haptic_gripper_system)
 
 # Specify the C++ standard
 set(CMAKE_CXX_STANDARD 17)

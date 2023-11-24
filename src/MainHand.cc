@@ -78,8 +78,10 @@ private:
   void timer_callback()
   {
     heartbeat_update();
+
+    // This is now from subscription: set_robot_hand_pos_camera();
     //set_robot_hand_pos();
-    set_robot_hand_pos_camera();
+    
     update_robot_hand_feedback();
     update_finger_force();
     apply_finger_force();
@@ -142,13 +144,13 @@ private:
     qbSoftHand_devices[0].SetGripValue(temp_grip_state,0);
   }
 
-  void set_robot_hand_pos_camera(std_msgs::msg::String msg)
+  void set_robot_hand_pos_camera(std_msgs::msg::String::SharedPtr msg)
   {
     std::string grip_state = msg->data;
 
-    if (grip_state == 'Open') {
+    if (grip_state == "Open") {
       temp_grip_state = 0;
-    } else if (grip_state == 'Closed') {
+    } else if (grip_state == "Closed") {
       temp_grip_state = 19000;
     }
 
