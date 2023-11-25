@@ -4,7 +4,7 @@ The Haptic Gripper System Framework aims to integrate both a way to receive cont
 
 The first version of the system framework consist of a machined learned camera tracing using the built-in webcam of the host computer to determinate if the operator's hand is open or closed, a qbrobotics Soft Hand Research as the mechanical robotic griper device, and the IceThimble as the haptic feedback device. All these three devices are installed as separate packages and should therefor be easy to change for different devices if needed. 
 
-##Operational Instruction
+## Operational Instruction
 
 After assembling and connecting all the hardware for the system, the ROS2 environment and packages should be installed. ROS2 are assumed pre-installed, if not this guide could be followed for a ROS2 humble installation. [Instalation ROS2](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html)
 
