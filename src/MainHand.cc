@@ -4,9 +4,9 @@
  * - created: 23/09/2023
  *
  * A node for connecting the control of a robotic hand
- * and the force feedback to a operator hand
+ * and the force feedback to an operator hand
  *
- * Future versions will incude arm tracking and robotic
+ * Future versions will include arm tracking and robotic
  * arm control
  */
 
