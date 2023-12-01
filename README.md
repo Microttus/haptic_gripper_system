@@ -17,8 +17,8 @@ mkdir src
 cd src
 
 git clone https://github.com/Microttus/qbshr_ctr.git
-gir clone https://github.com/Microttus/hand_gesture_publisher.git
-gir clone https://github.com/Microttus/haptic_gripper_system.git
+git clone https://github.com/Microttus/hand_gesture_publisher.git
+git clone https://github.com/Microttus/haptic_gripper_system.git
 ```
 
 
