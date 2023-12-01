@@ -30,6 +30,14 @@ source /opt/ros/humble/setup.bash
 colcon build
 ```
 
+You might have to install the required pyton packages before executing. Use:
+
+```text
+pip install tensorflow
+pip install mediapipe
+pip install cvzone
+```
+
 If the workspace builds successfully, the system is ready to be used. It is assumed at this stage that the IceThimble is set up as described in the IceThimble project report or in the README [here](https://github.com/Microttus/IceThimble). After the agent is launched, the IceThimble is powered on and the launch sequence for the servos are executed, the topics for applying force should be available. The next step is to set up the hand connection, which is executed by sourcing the local build and the _hand_gipper_system_ ran as shown in code below. Note that this must be in a different terminal window than the agent, as this must be running at all times. Additionally, it is good practice to launch it in a different window than the _colcon build_ was executed. 
 
 ```text
