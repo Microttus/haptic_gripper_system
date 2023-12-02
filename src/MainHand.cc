@@ -52,26 +52,32 @@ public:
     , qbSoftHand_devices(my_hands_.ReturnDeviceMap())
     , temp_grip_state(0)
     {
-      heartbeat_ = this->create_publisher<std_msgs::msg::String>("heartbeat_control", 10);        // Heartbeat
-      right_hand_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("finger_force", 10);    // Finger force publisher
+    heartbeat_ = this->create_publisher<std_msgs::msg::String>("heartbeat_control", 10);        // Heartbeat
+    right_hand_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("finger_force", 10);    // Finger force publisher
 
-      hand_guest_sub_ = this->create_subscription<std_msgs::msg::String>("/hand_gestures", 10, std::bind(&HandInterface::set_robot_hand_pos_camera, this, std::placeholders::_1));
+    hand_guest_sub_ = this->create_subscription<std_msgs::msg::String>("/hand_gestures", 10, std::bind(&HandInterface::set_robot_hand_pos_camera, this, std::placeholders::_1));
 
-      timer_ = this->create_wall_timer(10ms, std::bind(&HandInterface::timer_callback, this));
+    timer_ = this->create_wall_timer(10ms, std::bind(&HandInterface::timer_callback, this));
 
-      // Initialization of values
-      RightHand.thumb = 0;
-      RightHand.index = 0;
+    // Initialization of values
+    RightHand.thumb = 0;
+    RightHand.index = 0;
 
-      // Setup of the robotic hand
-      sleep(2);
-      std::cout << "There are " << qbSoftHand_devices.size() << " available qbSoftHand Research available for control" << std::endl;
-      sleep(2);
-      qbSoftHand_devices[0].SetMotorStates(true);
-      sleep(2);
+    // Setup of the robotic hand
+    if (qbSoftHand_devices.size() > 0) {
+        sleep(2);
+        //std::cout << "There are " << qbSoftHand_devices.size() << " available qbSoftHand Research available for control" << std::endl;
+        RCLCPP_INFO(this->get_logger(), "Number of available qbSoftHand Research '%li'", qbSoftHand_devices.size());
+        sleep(2);
+        qbSoftHand_devices[0].SetMotorStates(true);
+        sleep(2);
+    } else {
+        RCLCPP_ERROR(this->get_logger(), "No qbSoftHand Research available");
+        exit(0);
+    }
 
 
-      std::cout << "Setup completed" << std::endl;
+    std::cout << "Setup completed" << std::endl;
     }
 
 private:
