@@ -77,7 +77,8 @@ public:
     }
 
 
-    std::cout << "Setup completed" << std::endl;
+    //std::cout << "Setup completed" << std::endl;
+    RCLCPP_INFO(this->get_logger(), "Setup completed");
     }
 
 private:
